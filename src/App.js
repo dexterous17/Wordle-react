@@ -19,6 +19,7 @@ function App() {
   return (
     <div className="App">
       <h1>React Wordle</h1>
+      {solution}
       {solution && <Wordle solution={solution} />}
     </div>
   );

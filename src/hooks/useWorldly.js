@@ -4,13 +4,33 @@ const useWordle = (solution) => {
     const [turn, setTurn] = useState(0)
     const [currentGuess, setCurrentGuess] = useState('')
     const [guesses, setGuesses] = useState([]) // each guess is an array
-    const [history, setHistory] = useState(['brave','harsh']) // each guess is a string
+    const [history, setHistory] = useState(['brave', 'harsh']) // each guess is a string
     const [isCorrect, setIsCorrect] = useState(false)
 
     // format a guess into an array of letter objects 
     // e.g. [{key: 'a', color: 'yellow'}]
     const formatGuess = () => {
         console.log('formatting the guess - ', currentGuess)
+        let solutionArray = [...solution]
+        let formattedGuess = [...currentGuess].map((l) => {
+            return { key: l, color: 'grey' }
+        })
+
+        formattedGuess.forEach((l, i) => {
+            if (solutionArray[i] === l.key) {
+                formattedGuess[i].color = 'green'
+                solutionArray[i] = null
+            }
+        })
+
+        formattedGuess.forEach((l, i) => {
+            if (solutionArray.includes(l.key) && l.color !== 'green') {
+                formattedGuess[i].color = 'yellow'
+                solutionArray[solutionArray.indexOf(l.key)] = null
+            }
+        })
+
+        return formattedGuess
     }
 
     // add a new guess to the guesses state
@@ -25,7 +45,7 @@ const useWordle = (solution) => {
     const handleKeyup = ({ key }) => {
 
         if (key === 'Enter') {
-            setTurn(turn+1)
+            setTurn(turn + 1)
             if (turn > 5) {
                 console.log('Use have used all your guesse')
                 return
@@ -39,9 +59,10 @@ const useWordle = (solution) => {
             if (currentGuess.length !== 5) {
                 console.log('word must be 5 chars.')
                 return
-              }
+            }
 
-              formatGuess()
+            const fromatted = formatGuess()
+            console.log(fromatted)
         }
 
 
