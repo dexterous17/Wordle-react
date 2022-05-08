@@ -12,7 +12,7 @@ const Wordle = ({ solution }) => {
 
     return (
         <div>
-            currentGuess-{currentGuess}
+            currentGuess - {currentGuess}
         </div>
     );
 };

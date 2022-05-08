@@ -4,13 +4,13 @@ const useWordle = (solution) => {
     const [turn, setTurn] = useState(0)
     const [currentGuess, setCurrentGuess] = useState('')
     const [guesses, setGuesses] = useState([]) // each guess is an array
-    const [history, setHistory] = useState([]) // each guess is a string
+    const [history, setHistory] = useState(['brave','harsh']) // each guess is a string
     const [isCorrect, setIsCorrect] = useState(false)
 
     // format a guess into an array of letter objects 
     // e.g. [{key: 'a', color: 'yellow'}]
     const formatGuess = () => {
-
+        console.log('formatting the guess - ', currentGuess)
     }
 
     // add a new guess to the guesses state
@@ -23,6 +23,27 @@ const useWordle = (solution) => {
     // handle keyup event & track current guess
     // if user presses enter, add the new guess
     const handleKeyup = ({ key }) => {
+
+        if (key === 'Enter') {
+            setTurn(turn+1)
+            if (turn > 5) {
+                console.log('Use have used all your guesse')
+                return
+            }
+
+            if (history.includes(currentGuess)) {
+                console.log('U have already tried it')
+                return
+            }
+
+            if (currentGuess.length !== 5) {
+                console.log('word must be 5 chars.')
+                return
+              }
+
+              formatGuess()
+        }
+
 
         if (key === 'Backspace') {
             setCurrentGuess((prev) => {
