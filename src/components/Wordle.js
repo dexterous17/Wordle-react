@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import useWordle from '../hooks/useWorldly'
+import useWordle from '../hooks/useWordle'
 
 // components
 import Grid from './Grid'
