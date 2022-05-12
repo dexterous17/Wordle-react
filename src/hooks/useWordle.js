@@ -1,18 +1,18 @@
 import { useState } from 'react'
 
 const useWordle = (solution) => {
-  const [turn, setTurn] = useState(0) 
+  const [turn, setTurn] = useState(0)
   const [currentGuess, setCurrentGuess] = useState('')
   const [guesses, setGuesses] = useState([...Array(6)]) // each guess is an array
   const [history, setHistory] = useState([]) // each guess is a string
   const [isCorrect, setIsCorrect] = useState(false)
-
+  const [usedKeys, setUsedKeys] = useState({})
   // format a guess into an array of letter objects 
   // e.g. [{key: 'a', color: 'yellow'}]
   const formatGuess = () => {
     let solutionArray = [...solution]
     let formattedGuess = [...currentGuess].map((l) => {
-      return {key: l, color: 'grey'}
+      return { key: l, color: 'grey' }
     })
 
     // find any green letters
@@ -22,7 +22,7 @@ const useWordle = (solution) => {
         solutionArray[i] = null
       }
     })
-    
+
     // find any yellow letters
     formattedGuess.forEach((l, i) => {
       if (solutionArray.includes(l.key) && l.color !== 'green') {
@@ -51,6 +51,32 @@ const useWordle = (solution) => {
     })
     setTurn(prevTurn => {
       return prevTurn + 1
+    })
+
+    setUsedKeys((prevUsedKeys) => {
+      let newKeys = {...prevUsedKeys}
+
+
+      formattedGuess.forEach((l)=>{
+        const currentColor = newKeys[l.key]
+
+        if(l.color==='green'){
+          newKeys[l.key] = 'green'
+          return
+        }
+
+        if(l.color === 'yellow' && currentColor !== 'green'){
+          newKeys[l.key] = 'yellow'
+          return
+        }
+
+        if(l.color === 'grey' && currentColor !== 'green' && currentColor !== 'yellow'){
+          newKeys[l.key] = 'grey'
+          return
+
+        }
+      })
+      return newKeys
     })
     setCurrentGuess('')
   }
@@ -88,7 +114,7 @@ const useWordle = (solution) => {
     }
   }
 
-  return {turn, currentGuess, guesses, isCorrect, handleKeyup}
+  return { turn, currentGuess, guesses, usedKeys, isCorrect, handleKeyup }
 }
 
 export default useWordle
