@@ -5,8 +5,8 @@ import Keyboard from './Keyboard'
 import Modal from './Modal'
 
 export default function Wordle({ solution }) {
-  const { currentGuess, guesses, turn, isCorrect, handleKeyup, usedKeys, showModal } = useWordle(solution)
-  const [ showModel , setModal ] = useState(false)
+  const { currentGuess, guesses, turn, isCorrect, handleKeyup, usedKeys } = useWordle(solution)
+  const [ showModal , setModal ] = useState(false)
 
   useEffect(() => {
     window.addEventListener('keyup', handleKeyup)
