@@ -1,9 +1,9 @@
 # Wordle-react
 
 ## Libries that are used in the React Project. 
- json-server
- react
- react-dom
++ json-server
++ react
++ react-dom
 
 
 ## How to install Web Application 
